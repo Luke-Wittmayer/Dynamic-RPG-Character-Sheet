@@ -1,4 +1,7 @@
+<html>
 <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="./style.css" rel="stylesheet">
+<script src="./script.js"></script>
 
 <div class="container">
     <div class="row">
@@ -11,35 +14,46 @@
                 </tr>
                 <tr>
                     <td>Strength</td>
-                    <td><input type="number" placeholder="10" id="strScore"></td>
+                    <td><input type="number" value="10" id="strScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="strMod"></td>
                 </tr>
                 <tr>
                     <td>Dexerity</td>
-                    <td><input type="number" placeholder="10" id="dexScore"></td>
+                    <td><input type="number" value="10" id="dexScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="dexMod"></td>
                 </tr>
                 <tr>
                     <td>Constitution</td>
-                    <td><input type="number" placeholder="10" id="conScore"></td>
+                    <td><input type="number" value="10" id="conScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="conMod"></td>
                 </tr>
                 <tr>
                     <td>Intelligence</td>
-                    <td><input type="number" placeholder="10" id="intScore"></td>
+                    <td><input type="number" value="10" id="intScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="intMod"></td>
                 </tr>
                 <tr>
                     <td>Wisdom</td>
-                    <td><input type="number" placeholder="10" id="wisScore"></td>
+                    <td><input type="number" value="10" id="wisScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="wisMod"></td>
                 </tr>
                 <tr>
                     <td>Charisma</td>
-                    <td><input type="number" placeholder="10" id="chaScore"></td>
+                    <td><input type="number" value="10" id="chaScore" onchange="updateModifiers()"></td>
                     <td><input type="number" placeholder="0" id="chaMod"></td>
                 </tr>
             </table>
         </div>
+        <div class="col-4">
+            <h2>Player Level</h2>
+            <br>
+            <input type="number" id="playerLevel" min="1" max="20" value="1" onchange="playerLevelChange()">
+        </div>
+        <div class="col-4">
+            <h2>Proficiency Bonus</h2>
+            <br>
+            <input type="number" id="profBonus">
+        </div>
     </div>
 </div>
+</html>
