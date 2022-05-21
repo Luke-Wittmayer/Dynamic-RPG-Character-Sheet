@@ -15,6 +15,9 @@ function updateModifiers() {
     document.getElementById("chaMod").value = Math.floor((chaScore - 10)/2);
 
     setSkills();
+    enableArmor();
+    equipArmor(equippedArmor);
+    shieldEquip(shieldEquip);
 }
 
 function updateProfBonus() {
@@ -123,6 +126,88 @@ function setSkills(){
         document.getElementById("survScore").value = wisMod + profBonus;
     } else {
         document.getElementById("survScore").value = wisMod;
+    }
+}
+
+function equipArmor(equippedArmor){
+    var armor = equippedArmor.value;
+    if (armor == 'padded'){
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 11;
+    } else if (armor == 'leather'){
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 11;
+    } else if (armor == 'studded'){
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 12;
+    } else if (armor == 'hide'){
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 12;
+        if (tempArmor > 14){
+            document.getElementById("armorClass").value = 14;
+        } else {
+            document.getElementById("armorClass").value = tempArmor;
+        }
+    } else if (armor == 'chain'){
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 13;
+        if (tempArmor > 15){
+            document.getElementById("armorClass").value = 15;
+        } else {
+            document.getElementById("armorClass").value = tempArmor;
+        }
+    } else if (armor == 'scale'){
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 14;
+        if (tempArmor > 16){
+            document.getElementById("armorClass").value = 16;
+        } else {
+            document.getElementById("armorClass").value = tempArmor;
+        }
+    } else if (armor == 'breastplate'){
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 14;
+        if (tempArmor > 16){
+            document.getElementById("armorClass").value = 16;
+        } else {
+            document.getElementById("armorClass").value = tempArmor;
+        }
+    } else if (armor == 'halfplate'){
+        var tempArmor = parseInt(document.getElementById("dexMod").value) + 15;
+        if (tempArmor > 17){
+            document.getElementById("armorClass").value = 17;
+        } else {
+            document.getElementById("armorClass").value = tempArmor;
+        }
+    } else if (armor == 'ringmail') {
+        document.getElementById("armorClass").value = 14;
+    } else if (armor == 'chainmail') {
+        document.getElementById("armorClass").value = 16;
+    } else if (armor == 'splint') {
+        document.getElementById("armorClass").value = 17;
+    } else if (armor == 'plate') {
+        document.getElementById("armorClass").value = 18;
+    } else {
+        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 10;
+    }
+}
+
+function shieldEquip(shieldEquip){
+    var shield = shieldEquip.value;
+    if (shield == 'shield'){
+        document.getElementById("armorClass").value = parseInt(document.getElementById("armorClass").value) + 2;
+    } else {
+        equipArmor(equippedArmor);
+    }
+}
+
+function enableArmor(){
+    var strScore = document.getElementById("strScore").value;
+    if (strScore >= 15) {
+        document.getElementById("plateArmor").disabled = false;
+        document.getElementById("chainmailArmor").disabled = false;
+        document.getElementById("splintArmor").disabled = false;
+    } else if (strScore >= 13) {
+        document.getElementById("plateArmor").disabled = true;
+        document.getElementById("chainmailArmor").disabled = false;
+        document.getElementById("splintArmor").disabled = true;
+    } else {
+        document.getElementById("plateArmor").disabled = true;
+        document.getElementById("chainmailArmor").disabled = true;
+        document.getElementById("splintArmor").disabled = true;
     }
 }
 

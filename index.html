@@ -13,32 +13,32 @@
                 </tr>
                 <tr>
                     <td>Strength</td>
-                    <td><input type="number" value="10" id="strScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="strScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="strMod"></td>
                 </tr>
                 <tr>
                     <td>Dexerity</td>
-                    <td><input type="number" value="10" id="dexScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="dexScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="dexMod"></td>
                 </tr>
                 <tr>
                     <td>Constitution</td>
-                    <td><input type="number" value="10" id="conScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="conScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="conMod"></td>
                 </tr>
                 <tr>
                     <td>Intelligence</td>
-                    <td><input type="number" value="10" id="intScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="intScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="intMod"></td>
                 </tr>
                 <tr>
                     <td>Wisdom</td>
-                    <td><input type="number" value="10" id="wisScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="wisScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="wisMod"></td>
                 </tr>
                 <tr>
                     <td>Charisma</td>
-                    <td><input type="number" value="10" id="chaScore" onchange="updateModifiers()"></td>
+                    <td><input type="number" value="10" id="chaScore" onchange="updateModifiers();"></td>
                     <td><input type="number" value="0" id="chaMod"></td>
                 </tr>
             </table>
@@ -46,12 +46,45 @@
         <div class="col-4">
             <h2>Player Level</h2>
             <br>
-            <input type="number" id="playerLevel" min="1" max="20" value="1" onchange="playerLevelChange()">
+            <input type="number" id="playerLevel" min="1" max="20" value="1" onchange="playerLevelChange();">
+            <br><br>
+            <h2>Armor</h2>
+            <h6>Equipped Armor:</h6>
+            <select id="equippedArmor" onchange="equipArmor(this);">
+                    <option value="unarmored">None</option>
+                <optgroup id="lightArmor" value="Light Armor" label="Light Armor">
+                    <option value="padded">Padded</option>
+                    <option value="leather">Leather</option>
+                    <option value="studded">Studded Leather</option>
+                </optgroup>
+                <optgroup id="mediumArmor" value="Medium Armor" label="Medium Armor">
+                    <option value="hide">Hide</option>
+                    <option value="chain">Chain Shirt</option>
+                    <option value="scale">Scale Mail</option>
+                    <option value="breastplate">Breastplate</option>
+                    <option value="halfplate">Half Plate</option>
+                </optgroup>
+                <optgroup id="heavyArmor" value="Heavy Armor" label="Heavy Armor">
+                    <option value="ringmail">Ring Mail</option>
+                    <option id="chainmailArmor" value="chainmail" disabled>Chain Mail</option>
+                    <option id="splintArmor" value="splint" disabled>Splint</option>
+                    <option id="plateArmor" value="plate" disabled>Plate</option>
+                </optgroup>
+            </select>
+            <br><br>
+            <h6>Equipped Shield:</h6>
+            <select id ="shieldEquip" onchange="shieldEquip(this);">
+                <option value="none">None</option>
+                <option value="shield">Shield</option>
+            </select>
+            <br><br>
+            <h6>AC:</h6>
+            <input type="number" id="armorClass" placeholder="0"/>
         </div>
         <div class="col-4">
             <h2>Proficiency Bonus</h2>
             <br>
-            <input type="number" id="profBonus">
+            <input type="number" id="profBonus" value="2">
             <br><br>
             <h2>Skills</h2>
             <table class="table">
