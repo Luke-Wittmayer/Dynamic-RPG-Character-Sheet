@@ -215,5 +215,57 @@ function playerLevelChange() {
     updateProfBonus();
     updateModifiers();
     setSkills();
+    resetHP();
+    resetHitDice();
 }
 
+function takeDamage() {
+    var amount = document.getElementById("modHP").value;
+    var currentHP = document.getElementById("currentHP").value;
+    if ((currentHP - amount) >= 0) {
+        document.getElementById("currentHP").value = currentHP - amount;
+    } else {
+        document.getElementById("currentHP").value = 0;
+    }
+}
+
+function healHP() {
+    var amount = parseInt(document.getElementById("modHP").value);
+    var currentHP = parseInt(document.getElementById("currentHP").value);
+    var maxHP = parseInt(document.getElementById("maxHP").value);
+    if ((currentHP + amount) <= maxHP){
+        document.getElementById("currentHP").value = currentHP + amount;
+    } else {
+        document.getElementById("currentHP").value = maxHP;
+    }
+}
+
+function longRest() {
+    resetHP();
+    resetHitDice();
+}
+
+function shortRest() {
+    var currentDice = parseInt(document.getElementById("hitDice").value);
+    if (currentDice > 0) {
+        var currentHP = parseInt(document.getElementById("currentHP").value);
+        var maxHP = parseInt(document.getElementById("maxHP").value);
+        var maxDie = parseInt(document.getElementById("hitDie").value);
+        var hitDieRoll = Math.floor(Math.random() * Math.floor(maxDie));
+        var conMod = parseInt(document.getElementById("conMod").value);
+        if ((currentHP + hitDieRoll + conMod) <= maxHP) {
+            document.getElementById("currentHP").value = currentHP + hitDieRoll + conMod;
+        } else {
+            document.getElementById("currentHP").value = maxHP;
+        }
+        document.getElementById("hitDice").value = currentDice - 1;
+    }
+}
+
+function resetHP() {
+    document.getElementById("currentHP").value = document.getElementById("maxHP").value;
+}
+
+function resetHitDice() {
+    document.getElementById("hitDice").value = document.getElementById("playerLevel").value;
+}

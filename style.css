@@ -1,3 +1,22 @@
 .table input[type=number] {
     width: 100%;
 }
+
+.stat {
+    width: 50px;
+    vertical-align: middle;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.center-me {
+    text-align: center;
+}
+
+select {
+    padding: 2px;
+    min-width: 50px;
+    vertical-align: middle;
+}
