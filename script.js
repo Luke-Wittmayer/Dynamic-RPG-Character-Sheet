@@ -1,18 +1,26 @@
+function getValue(element){
+    return document.getElementById(element).value;
+}
+
+function setValue(element, newValue){
+    document.getElementById(element).value = newValue;
+}
+
 function updateModifiers() {
     // convert ability scores into modifiers
     
-    var strScore = document.getElementById("strScore").value;
-    document.getElementById("strMod").value = Math.floor((strScore - 10)/2);
-    var dexScore = document.getElementById("dexScore").value;
-    document.getElementById("dexMod").value = Math.floor((dexScore - 10)/2);
-    var conScore = document.getElementById("conScore").value;
-    document.getElementById("conMod").value = Math.floor((conScore - 10)/2);
-    var intScore = document.getElementById("intScore").value;
-    document.getElementById("intMod").value = Math.floor((intScore - 10)/2);
-    var wisScore = document.getElementById("wisScore").value;
-    document.getElementById("wisMod").value = Math.floor((wisScore - 10)/2);
-    var chaScore = document.getElementById("chaScore").value;
-    document.getElementById("chaMod").value = Math.floor((chaScore - 10)/2);
+    var strScore = getValue("strScore");
+    setValue("strMod", Math.floor((strScore - 10)/2));
+    var dexScore = getValue("dexScore");
+    setValue("dexMod", Math.floor((dexScore - 10)/2));
+    var conScore = getValue("conScore");
+    setValue("conMod", Math.floor((conScore - 10)/2));
+    var intScore = getValue("intScore");
+    setValue("intMod", Math.floor((intScore - 10)/2));
+    var wisScore = getValue("wisScore");
+    setValue("wisMod", Math.floor((wisScore - 10)/2));
+    var chaScore = getValue("chaScore");
+    setValue("chaMod", Math.floor((chaScore - 10)/2));;
 
     setSkills();
     enableArmor();
@@ -23,179 +31,177 @@ function updateModifiers() {
 function updateProfBonus() {
   // update proficiency bonus based on player level
   
-  var playerLevel = parseInt(document.getElementById("playerLevel").value);
-  document.getElementById("profBonus").value = Math.ceil((playerLevel/4) + 1);
+  var playerLevel = parseInt(getValue("playerLevel"));
+  setValue("profBonus", Math.ceil((playerLevel/4) + 1));
     
 }
 
 function setSkills(){
-    var profBonus = parseInt(document.getElementById("profBonus").value);
-    var strMod = parseInt(document.getElementById("strMod").value);
-    var dexMod = parseInt(document.getElementById("dexMod").value);
-    var conMod = parseInt(document.getElementById("conMod").value);
-    var intMod = parseInt(document.getElementById("intMod").value);
-    var wisMod = parseInt(document.getElementById("wisMod").value);
-    var chaMod = parseInt(document.getElementById("chaMod").value);
+    var profBonus = parseInt(getValue("profBonus"));
+    var strMod = parseInt(getValue("strMod"));
+    var dexMod = parseInt(getValue("dexMod"));
+    var intMod = parseInt(getValue("intMod"));
+    var wisMod = parseInt(getValue("wisMod"));
+    var chaMod = parseInt(getValue("chaMod"));
 
     if (document.getElementById("acroProf").checked == true) {
-        document.getElementById("acroScore").value = dexMod + profBonus;
+        setValue("acroScore", dexMod+profBonus);
     } else {
-        document.getElementById("acroScore").value = dexMod;
+        setValue("acroScore", dexMod);
     }
     if (document.getElementById("animProf").checked == true) {
-        document.getElementById("animScore").value = wisMod + profBonus;
+        setValue("animScore", wisMod+profBonus);
     } else {
-        document.getElementById("animScore").value = wisMod;
+        setValue("animScore", wisMod);
     }
     if (document.getElementById("arcaProf").checked == true) {
-        document.getElementById("arcaScore").value = intMod + profBonus;
+        setValue("arcaScore", intMod+profBonus);
     } else {
-        document.getElementById("arcaScore").value = intMod;
+        setValue("arcaScore", intMod);
     }
     if (document.getElementById("athlProf").checked == true) {
-        document.getElementById("athlScore").value = strMod + profBonus;
+        setValue("athlScore", strMod+profBonus);
     } else {
-        document.getElementById("athlScore").value = strMod;
+        setValue("athlScore", strMod);
     }
     if (document.getElementById("decProf").checked == true) {
-        document.getElementById("decScore").value = chaMod + profBonus;
+        setValue("decScore", chaMod+profBonus);
     } else {
-        document.getElementById("decScore").value = chaMod;
+        setValue("decScore", chaMod);
     }
     if (document.getElementById("hisProf").checked == true) {
-        document.getElementById("hisScore").value = intMod + profBonus;
+        setValue("hisScore", intMod+profBonus);
     } else {
-        document.getElementById("hisScore").value = intMod;
+        setValue("hisScore", intMod);
     }
     if (document.getElementById("insProf").checked == true) {
-        document.getElementById("insScore").value = wisMod + profBonus;
+        setValue("insScore", wisMod+profBonus);
     } else {
-        document.getElementById("insScore").value = wisMod;
+        setValue("insScore", wisMod);
     }
     if (document.getElementById("intiProf").checked == true) {
-        document.getElementById("intiScore").value = chaMod + profBonus;
+        setValue("intiScore", chaMod+profBonus);
     } else {
-        document.getElementById("intiScore").value = chaMod;
+        setValue("intiScore", chaMod);
     }
     if (document.getElementById("invProf").checked == true) {
-        document.getElementById("invScore").value = intMod + profBonus;
+        setValue("invScore", intMod+profBonus);
     } else {
-        document.getElementById("invScore").value = intMod;
+        setValue("invScore", intMod);
     }
     if (document.getElementById("medProf").checked == true) {
-        document.getElementById("medScore").value = wisMod + profBonus;
+        setValue("medScore", wisMod+profBonus);
     } else {
-        document.getElementById("medScore").value = wisMod;
+        setValue("medScore", wisMod);
     }
     if (document.getElementById("natProf").checked == true) {
-        document.getElementById("natScore").value = intMod + profBonus;
+        setValue("natScore", intMod+profBonus);
     } else {
-        document.getElementById("natScore").value = intMod;
+        setValue("natScore", intMod);
     }
     if (document.getElementById("percProf").checked == true) {
-        document.getElementById("percScore").value = wisMod + profBonus;
+        setValue("percScore", wisMod+profBonus);
     } else {
-        document.getElementById("percScore").value = wisMod;
+        setValue("percScore", wisMod);
     }
     if (document.getElementById("perfProf").checked == true) {
-        document.getElementById("perfScore").value = chaMod + profBonus;
+        setValue("perfScore", chaMod+profBonus);
     } else {
-        document.getElementById("perfScore").value = chaMod;
+        setValue("perfScore", chaMod);
     }
     if (document.getElementById("persProf").checked == true) {
-        document.getElementById("persScore").value = chaMod + profBonus;
+        setValue("persScore", chaMod+profBonus);
     } else {
-        document.getElementById("persScore").value = chaMod;
+        setValue("persScore", chaMod);
     }
     if (document.getElementById("relProf").checked == true) {
-        document.getElementById("relScore").value = intMod + profBonus;
+        setValue("relScore", intMod+profBonus);
     } else {
-        document.getElementById("relScore").value = intMod;
+        setValue("relScore", intMod);
     }
     if (document.getElementById("sleiProf").checked == true) {
-        document.getElementById("sleiScore").value = dexMod + profBonus;
+        setValue("sleiScore", dexMod+profBonus);
     } else {
-        document.getElementById("sleiScore").value = dexMod;
+        setValue("sleiScore", dexMod);
     }
     if (document.getElementById("steProf").checked == true) {
-        document.getElementById("steScore").value = dexMod + profBonus;
+        setValue("steScore", dexMod+profBonus);
     } else {
-        document.getElementById("steScore").value = dexMod;
+        setValue("steScore", dexMod);
     }
     if (document.getElementById("survProf").checked == true) {
-        document.getElementById("survScore").value = wisMod + profBonus;
+        setValue("survScore", wisMod+profBonus);
     } else {
-        document.getElementById("survScore").value = wisMod;
+        setValue("survScore", wisMod);
     }
 }
 
 function equipArmor(equippedArmor){
     var armor = equippedArmor.value;
-    if (armor == 'padded'){
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 11;
-    } else if (armor == 'leather'){
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 11;
+    var dexMod = parseInt(getValue("dexMod"));
+    if (armor == 'padded' || armor == 'leather'){
+        setValue("armorClass", dexMod + 11);
     } else if (armor == 'studded'){
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 12;
+        setValue("armorClass", dexMod + 12);
     } else if (armor == 'hide'){
-        var tempArmor = parseInt(document.getElementById("dexMod").value) + 12;
+        var tempArmor = dexMod + 12;
         if (tempArmor > 14){
-            document.getElementById("armorClass").value = 14;
+            setValue("armorClass", 14);
         } else {
-            document.getElementById("armorClass").value = tempArmor;
+            setValue("armorClass", tempArmor);
         }
     } else if (armor == 'chain'){
-        var tempArmor = parseInt(document.getElementById("dexMod").value) + 13;
+        var tempArmor = dexMod + 13;
         if (tempArmor > 15){
-            document.getElementById("armorClass").value = 15;
+            setValue("armorClass", 15);
         } else {
-            document.getElementById("armorClass").value = tempArmor;
+            setValue("armorClass", tempArmor);
         }
     } else if (armor == 'scale'){
-        var tempArmor = parseInt(document.getElementById("dexMod").value) + 14;
+        var tempArmor = dexMod + 14;
         if (tempArmor > 16){
-            document.getElementById("armorClass").value = 16;
+            setValue("armorClass", 16);
         } else {
-            document.getElementById("armorClass").value = tempArmor;
+            setValue("armorClass", tempArmor);
         }
     } else if (armor == 'breastplate'){
-        var tempArmor = parseInt(document.getElementById("dexMod").value) + 14;
+        var tempArmor = dexMod + 14;
         if (tempArmor > 16){
-            document.getElementById("armorClass").value = 16;
+            setValue("armorClass", 16);
         } else {
-            document.getElementById("armorClass").value = tempArmor;
+            setValue("armorClass", tempArmor);
         }
     } else if (armor == 'halfplate'){
-        var tempArmor = parseInt(document.getElementById("dexMod").value) + 15;
+        var tempArmor = dexMod + 15;
         if (tempArmor > 17){
-            document.getElementById("armorClass").value = 17;
+            setValue("armorClass", 17);
         } else {
-            document.getElementById("armorClass").value = tempArmor;
+            setValue("armorClass", tempArmor);
         }
     } else if (armor == 'ringmail') {
-        document.getElementById("armorClass").value = 14;
+        setValue("armorClass", 14);
     } else if (armor == 'chainmail') {
-        document.getElementById("armorClass").value = 16;
+        setValue("armorClass", 16);
     } else if (armor == 'splint') {
-        document.getElementById("armorClass").value = 17;
+        setValue("armorClass", 17);
     } else if (armor == 'plate') {
-        document.getElementById("armorClass").value = 18;
+        setValue("armorClass", 18);
     } else {
-        document.getElementById("armorClass").value = parseInt(document.getElementById("dexMod").value) + 10;
+        setValue("armorClass", dexMod+10);
     }
 }
 
 function shieldEquip(shieldEquip){
     var shield = shieldEquip.value;
     if (shield == 'shield'){
-        document.getElementById("armorClass").value = parseInt(document.getElementById("armorClass").value) + 2;
+        setValue("armorClass", parseInt(getValue("armorClass")) + 2);
     } else {
         equipArmor(equippedArmor);
     }
 }
 
 function enableArmor(){
-    var strScore = document.getElementById("strScore").value;
+    var strScore = getValue("strScore");
     if (strScore >= 15) {
         document.getElementById("plateArmor").disabled = false;
         document.getElementById("chainmailArmor").disabled = false;
@@ -220,23 +226,23 @@ function playerLevelChange() {
 }
 
 function takeDamage() {
-    var amount = document.getElementById("modHP").value;
-    var currentHP = document.getElementById("currentHP").value;
+    var amount = getValue("modHP");
+    var currentHP = getValue("currentHP");
     if ((currentHP - amount) >= 0) {
-        document.getElementById("currentHP").value = currentHP - amount;
+        setValue("currentHP", currentHP-amount);
     } else {
-        document.getElementById("currentHP").value = 0;
+        setValue("currentHP", 0);
     }
 }
 
 function healHP() {
-    var amount = parseInt(document.getElementById("modHP").value);
-    var currentHP = parseInt(document.getElementById("currentHP").value);
-    var maxHP = parseInt(document.getElementById("maxHP").value);
+    var amount = parseInt(getValue("modHP"));
+    var currentHP = parseInt(getValue("currentHP"));
+    var maxHP = parseInt(getValue("maxHP"));
     if ((currentHP + amount) <= maxHP){
-        document.getElementById("currentHP").value = currentHP + amount;
+        setValue("currentHP", currentHP+amount);
     } else {
-        document.getElementById("currentHP").value = maxHP;
+        setValue("currentHP", maxHP);
     }
 }
 
@@ -246,26 +252,30 @@ function longRest() {
 }
 
 function shortRest() {
-    var currentDice = parseInt(document.getElementById("hitDice").value);
+    var currentDice = parseInt(getValue("hitDice"));
     if (currentDice > 0) {
-        var currentHP = parseInt(document.getElementById("currentHP").value);
-        var maxHP = parseInt(document.getElementById("maxHP").value);
-        var maxDie = parseInt(document.getElementById("hitDie").value);
+        var currentHP = parseInt(getValue("currentHP"));
+        var maxHP = parseInt(getValue("maxHP"));
+        var maxDie = parseInt(getValue("hitDie"));
         var hitDieRoll = Math.floor(Math.random() * Math.floor(maxDie));
-        var conMod = parseInt(document.getElementById("conMod").value);
+        var conMod = parseInt(getValue("conMod"));
         if ((currentHP + hitDieRoll + conMod) <= maxHP) {
-            document.getElementById("currentHP").value = currentHP + hitDieRoll + conMod;
+            setValue("currentHP", currentHP+hitDieRoll+conMod);
         } else {
-            document.getElementById("currentHP").value = maxHP;
+            setValue("currentHP", maxHP);
         }
-        document.getElementById("hitDice").value = currentDice - 1;
+        setValue("hitDice", currentDice-1);
     }
 }
 
 function resetHP() {
-    document.getElementById("currentHP").value = document.getElementById("maxHP").value;
+    setValue("currentHP", getValue("maxHP"));
 }
 
 function resetHitDice() {
-    document.getElementById("hitDice").value = document.getElementById("playerLevel").value;
+    var currentDice = parseInt(getValue("hitDice"));
+    var maxDice = parseInt(getValue("playerLevel"));
+    if(currentDice < maxDice){
+        setValue("hitDice", currentDice + Math.floor((maxDice-currentDice)/2));
+    }
 }
