@@ -47,6 +47,14 @@
                     <td><input type="number" value="0" id="chaMod"></td>
                 </tr>
             </table>
+            <br>
+            <div class="text-center">
+                <btn class="btn btn-secondary" onclick="setLocalStorage();">Save Data</btn>
+            </div>
+            <br>
+            <div class="text-center">
+                <btn class="btn btn-secondary" onclick="getStoredValues();">Load Data</btn>
+            </div>
         </div>
         <div class="col-4">
             <h2>Armor</h2>
@@ -74,7 +82,7 @@
             </select>
             <br><br>
             <h6>Equipped Shield:</h6>
-            <select id ="shieldEquip" onchange="shieldEquip(this);">
+            <select id ="shieldEquip" onchange="equipShield(this);">
                 <option value="none">None</option>
                 <option value="shield">Shield</option>
             </select>
@@ -210,3 +218,4 @@
         </div>
     </div>
 </div>
+

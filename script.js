@@ -6,6 +6,98 @@ function setValue(element, newValue){
     document.getElementById(element).value = newValue;
 }
 
+function getStoredValues() {
+    // set player level
+    setValue("playerLevel", localStorage.getItem("playerLevel"));
+    updateProfBonus();
+
+    // set ability scores
+    setValue("strScore", localStorage.getItem("strScore"));
+    setValue("dexScore", localStorage.getItem("dexScore"));
+    setValue("conScore", localStorage.getItem("conScore"));
+    setValue("intScore", localStorage.getItem("intScore"));
+    setValue("wisScore", localStorage.getItem("wisScore"));
+    setValue("chaScore", localStorage.getItem("chaScore"));
+    updateModifiers();
+
+    // set AC
+    setValue("equippedArmor", localStorage.getItem("equippedArmor"));
+    setValue("shieldEquip", localStorage.getItem("shieldEquip"));
+    equipArmor(equippedArmor);
+
+    // set HP / hit dice
+    setValue("currentHP", localStorage.getItem("currentHP"));
+    setValue("maxHP", localStorage.getItem("maxHP"));
+    setValue("hitDice", localStorage.getItem("hitDice"));
+    setValue("hitDie", localStorage.getItem("hitDie"));
+
+    // set skills
+    document.getElementById("acroProf").checked = JSON.parse(localStorage.getItem("acroProf"));
+    document.getElementById("animProf").checked = JSON.parse(localStorage.getItem("animProf"));
+    document.getElementById("arcaProf").checked = JSON.parse(localStorage.getItem("arcaProf"));
+    document.getElementById("athlProf").checked = JSON.parse(localStorage.getItem("athlProf"));
+    document.getElementById("decProf").checked = JSON.parse(localStorage.getItem("decProf"));
+    document.getElementById("hisProf").checked = JSON.parse(localStorage.getItem("hisProf"));
+    document.getElementById("insProf").checked = JSON.parse(localStorage.getItem("insProf"));
+    document.getElementById("intiProf").checked = JSON.parse(localStorage.getItem("intiProf"));
+    document.getElementById("invProf").checked = JSON.parse(localStorage.getItem("invProf"));
+    document.getElementById("medProf").checked = JSON.parse(localStorage.getItem("medProf"));
+    document.getElementById("natProf").checked = JSON.parse(localStorage.getItem("natProf"));
+    document.getElementById("percProf").checked = JSON.parse(localStorage.getItem("percProf"));
+    document.getElementById("perfProf").checked = JSON.parse(localStorage.getItem("perfProf"));
+    document.getElementById("persProf").checked = JSON.parse(localStorage.getItem("persProf"));
+    document.getElementById("relProf").checked = JSON.parse(localStorage.getItem("relProf"));
+    document.getElementById("sleiProf").checked = JSON.parse(localStorage.getItem("sleiProf"));
+    document.getElementById("steProf").checked = JSON.parse(localStorage.getItem("steProf"));
+    document.getElementById("survProf").checked = JSON.parse(localStorage.getItem("survProf"));
+    setSkills();
+
+}
+
+function setLocalStorage() {
+    // save player level
+    localStorage.setItem("playerLevel", getValue("playerLevel"));
+    // save ability scores
+    localStorage.setItem("strScore", getValue("strScore"));
+    localStorage.setItem("dexScore", getValue("dexScore"));
+    localStorage.setItem("conScore", getValue("conScore"));
+    localStorage.setItem("intScore", getValue("intScore"));
+    localStorage.setItem("wisScore", getValue("wisScore"));
+    localStorage.setItem("chaScore", getValue("chaScore"));
+
+    // save armor + shield info
+    localStorage.setItem("equippedArmor", getValue("equippedArmor"));
+    localStorage.setItem("shieldEquip", getValue("shieldEquip"));
+
+    // save HP/hit dice
+    localStorage.setItem("currentHP", getValue("currentHP"));
+    localStorage.setItem("maxHP", getValue("maxHP"));
+    localStorage.setItem("hitDice", getValue("hitDice"));
+    localStorage.setItem("hitDie", getValue("hitDie"));
+
+    // save skills
+    localStorage.setItem("acroProf", document.getElementById("acroProf").checked);
+    localStorage.setItem("animProf", document.getElementById("animProf").checked);
+    localStorage.setItem("arcaProf", document.getElementById("arcaProf").checked);
+    localStorage.setItem("athlProf", document.getElementById("athlProf").checked);
+    localStorage.setItem("decProf", document.getElementById("decProf").checked);
+    localStorage.setItem("hisProf", document.getElementById("hisProf").checked);
+    localStorage.setItem("insProf", document.getElementById("insProf").checked);
+    localStorage.setItem("intiProf", document.getElementById("intiProf").checked);
+    localStorage.setItem("invProf", document.getElementById("invProf").checked);
+    localStorage.setItem("medProf", document.getElementById("medProf").checked);
+    localStorage.setItem("natProf", document.getElementById("natProf").checked);
+    localStorage.setItem("percProf", document.getElementById("percProf").checked);
+    localStorage.setItem("perfProf", document.getElementById("perfProf").checked);
+    localStorage.setItem("persProf", document.getElementById("persProf").checked);
+    localStorage.setItem("relProf", document.getElementById("relProf").checked);
+    localStorage.setItem("sleiProf", document.getElementById("sleiProf").checked);
+    localStorage.setItem("steProf", document.getElementById("steProf").checked);
+    localStorage.setItem("survProf", document.getElementById("survProf").checked);
+    
+}
+
+
 function updateModifiers() {
     // convert ability scores into modifiers
     
@@ -25,7 +117,7 @@ function updateModifiers() {
     setSkills();
     enableArmor();
     equipArmor(equippedArmor);
-    shieldEquip(shieldEquip);
+    equipShield(shieldEquip);
 }
 
 function updateProfBonus() {
@@ -191,7 +283,7 @@ function equipArmor(equippedArmor){
     }
 }
 
-function shieldEquip(shieldEquip){
+function equipShield(shieldEquip){
     var shield = shieldEquip.value;
     if (shield == 'shield'){
         setValue("armorClass", parseInt(getValue("armorClass")) + 2);
