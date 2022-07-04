@@ -97,7 +97,6 @@ function setLocalStorage() {
     
 }
 
-
 function updateModifiers() {
     // convert ability scores into modifiers
     
@@ -115,6 +114,7 @@ function updateModifiers() {
     setValue("chaMod", Math.floor((chaScore - 10)/2));;
 
     setSkills();
+    setSaves();
     enableArmor();
     equipArmor(equippedArmor);
     equipShield(shieldEquip);
@@ -126,6 +126,47 @@ function updateProfBonus() {
   var playerLevel = parseInt(getValue("playerLevel"));
   setValue("profBonus", Math.ceil((playerLevel/4) + 1));
     
+}
+
+function setSaves(){
+    var profBonus = parseInt(getValue("profBonus"));
+    var strMod = parseInt(getValue("strMod"));
+    var dexMod = parseInt(getValue("dexMod"));
+    var conMod = parseInt(getValue("conMod"));
+    var intMod = parseInt(getValue("intMod"));
+    var wisMod = parseInt(getValue("wisMod"));
+    var chaMod = parseInt(getValue("chaMod")); 
+
+    if (document.getElementById("strProf").checked == true) {
+        setValue("strSave", strMod+profBonus);
+    } else {
+        setValue("strSave", strMod);
+    }
+    if (document.getElementById("dexProf").checked == true) {
+        setValue("dexSave", dexMod+profBonus);
+    } else {
+        setValue("dexSave", dexMod);
+    }
+    if (document.getElementById("conProf").checked == true) {
+        setValue("conSave", conMod+profBonus);
+    } else {
+        setValue("conSave", conMod);
+    }
+    if (document.getElementById("intProf").checked == true) {
+        setValue("intSave", intMod+profBonus);
+    } else {
+        setValue("intSave", intMod);
+    }
+    if (document.getElementById("wisProf").checked == true) {
+        setValue("wisSave", wisMod+profBonus);
+    } else {
+        setValue("wisSave", wisMod);
+    }
+    if (document.getElementById("chaProf").checked == true) {
+        setValue("chaSave", chaMod+profBonus);
+    } else {
+        setValue("chaSave", chaMod);
+    }
 }
 
 function setSkills(){
