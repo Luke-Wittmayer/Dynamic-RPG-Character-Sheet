@@ -31,7 +31,7 @@ function getStoredValues() {
     setValue("hitDice", localStorage.getItem("hitDice"));
     setValue("hitDie", localStorage.getItem("hitDie"));
 
-    // set skills
+    // set skills and saving throws
     document.getElementById("acroProf").checked = JSON.parse(localStorage.getItem("acroProf"));
     document.getElementById("animProf").checked = JSON.parse(localStorage.getItem("animProf"));
     document.getElementById("arcaProf").checked = JSON.parse(localStorage.getItem("arcaProf"));
@@ -50,8 +50,16 @@ function getStoredValues() {
     document.getElementById("sleiProf").checked = JSON.parse(localStorage.getItem("sleiProf"));
     document.getElementById("steProf").checked = JSON.parse(localStorage.getItem("steProf"));
     document.getElementById("survProf").checked = JSON.parse(localStorage.getItem("survProf"));
-    setSkills();
 
+    document.getElementById("strProf").checked = JSON.parse(localStorage.getItem("strProf"));
+    document.getElementById("dexProf").checked = JSON.parse(localStorage.getItem("dexProf"));
+    document.getElementById("conProf").checked = JSON.parse(localStorage.getItem("conProf"));
+    document.getElementById("intProf").checked = JSON.parse(localStorage.getItem("intProf"));
+    document.getElementById("wisProf").checked = JSON.parse(localStorage.getItem("wisProf"));
+    document.getElementById("chaProf").checked = JSON.parse(localStorage.getItem("chaProf"));
+    
+    setSkills();
+    setSaves();
 }
 
 function setLocalStorage() {
@@ -75,7 +83,7 @@ function setLocalStorage() {
     localStorage.setItem("hitDice", getValue("hitDice"));
     localStorage.setItem("hitDie", getValue("hitDie"));
 
-    // save skills
+    // save skills and saving throws
     localStorage.setItem("acroProf", document.getElementById("acroProf").checked);
     localStorage.setItem("animProf", document.getElementById("animProf").checked);
     localStorage.setItem("arcaProf", document.getElementById("arcaProf").checked);
@@ -94,6 +102,13 @@ function setLocalStorage() {
     localStorage.setItem("sleiProf", document.getElementById("sleiProf").checked);
     localStorage.setItem("steProf", document.getElementById("steProf").checked);
     localStorage.setItem("survProf", document.getElementById("survProf").checked);
+
+    localStorage.setItem("strProf", document.getElementById("strProf").checked);
+    localStorage.setItem("dexProf", document.getElementById("dexProf").checked);
+    localStorage.setItem("conProf", document.getElementById("conProf").checked);
+    localStorage.setItem("intProf", document.getElementById("intProf").checked);
+    localStorage.setItem("wisProf", document.getElementById("wisProf").checked);
+    localStorage.setItem("chaProf", document.getElementById("chaProf").checked);
     
 }
 
