@@ -1,3 +1,5 @@
+var characterData = [];
+
 function getValue(element){
     return document.getElementById(element).value;
 }
@@ -6,110 +8,154 @@ function setValue(element, newValue){
     document.getElementById(element).value = newValue;
 }
 
-function getStoredValues() {
-    // set player level
-    setValue("playerLevel", localStorage.getItem("playerLevel"));
-    updateProfBonus();
+function loadSheet() {
+    var file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKNE_Z7AZ7zHus002EWtn2nQwgQmAsKEgjvru2cdrUzlZ4wj5vfIfK4-qZvJriyf8ecBMHw_JMLIro/pub?gid=0&single=true&output=csv";
 
-    // set ability scores
-    setValue("strScore", localStorage.getItem("strScore"));
-    setValue("dexScore", localStorage.getItem("dexScore"));
-    setValue("conScore", localStorage.getItem("conScore"));
-    setValue("intScore", localStorage.getItem("intScore"));
-    setValue("wisScore", localStorage.getItem("wisScore"));
-    setValue("chaScore", localStorage.getItem("chaScore"));
-    updateModifiers();
-
-    // set AC
-    setValue("equippedArmor", localStorage.getItem("equippedArmor"));
-    setValue("shieldEquip", localStorage.getItem("shieldEquip"));
-    equipArmor(equippedArmor);
-
-    // set HP / hit dice
-    setValue("currentHP", localStorage.getItem("currentHP"));
-    setValue("maxHP", localStorage.getItem("maxHP"));
-    setValue("hitDice", localStorage.getItem("hitDice"));
-    setValue("hitDie", localStorage.getItem("hitDie"));
-
-    // set skills and saving throws
-    document.getElementById("acroProf").checked = JSON.parse(localStorage.getItem("acroProf"));
-    document.getElementById("animProf").checked = JSON.parse(localStorage.getItem("animProf"));
-    document.getElementById("arcaProf").checked = JSON.parse(localStorage.getItem("arcaProf"));
-    document.getElementById("athlProf").checked = JSON.parse(localStorage.getItem("athlProf"));
-    document.getElementById("decProf").checked = JSON.parse(localStorage.getItem("decProf"));
-    document.getElementById("hisProf").checked = JSON.parse(localStorage.getItem("hisProf"));
-    document.getElementById("insProf").checked = JSON.parse(localStorage.getItem("insProf"));
-    document.getElementById("intiProf").checked = JSON.parse(localStorage.getItem("intiProf"));
-    document.getElementById("invProf").checked = JSON.parse(localStorage.getItem("invProf"));
-    document.getElementById("medProf").checked = JSON.parse(localStorage.getItem("medProf"));
-    document.getElementById("natProf").checked = JSON.parse(localStorage.getItem("natProf"));
-    document.getElementById("percProf").checked = JSON.parse(localStorage.getItem("percProf"));
-    document.getElementById("perfProf").checked = JSON.parse(localStorage.getItem("perfProf"));
-    document.getElementById("persProf").checked = JSON.parse(localStorage.getItem("persProf"));
-    document.getElementById("relProf").checked = JSON.parse(localStorage.getItem("relProf"));
-    document.getElementById("sleiProf").checked = JSON.parse(localStorage.getItem("sleiProf"));
-    document.getElementById("steProf").checked = JSON.parse(localStorage.getItem("steProf"));
-    document.getElementById("survProf").checked = JSON.parse(localStorage.getItem("survProf"));
-
-    document.getElementById("strProf").checked = JSON.parse(localStorage.getItem("strProf"));
-    document.getElementById("dexProf").checked = JSON.parse(localStorage.getItem("dexProf"));
-    document.getElementById("conProf").checked = JSON.parse(localStorage.getItem("conProf"));
-    document.getElementById("intProf").checked = JSON.parse(localStorage.getItem("intProf"));
-    document.getElementById("wisProf").checked = JSON.parse(localStorage.getItem("wisProf"));
-    document.getElementById("chaProf").checked = JSON.parse(localStorage.getItem("chaProf"));
-    
-    setSkills();
-    setSaves();
+    Papa.parse(file,{
+        download: true,
+        header: false,
+        complete: function (results) {
+          characterData = results.data;
+          populateData(characterData);
+        }
+      });
 }
 
-function setLocalStorage() {
-    // save player level
-    localStorage.setItem("playerLevel", getValue("playerLevel"));
-    // save ability scores
-    localStorage.setItem("strScore", getValue("strScore"));
-    localStorage.setItem("dexScore", getValue("dexScore"));
-    localStorage.setItem("conScore", getValue("conScore"));
-    localStorage.setItem("intScore", getValue("intScore"));
-    localStorage.setItem("wisScore", getValue("wisScore"));
-    localStorage.setItem("chaScore", getValue("chaScore"));
+function populateData(data) {
+    var playerList;
+    var uniquePlayers = [];
+    for (var i = 0; i < data.length; i++){
+        if(!uniquePlayers.includes(data[i].playerName)) {
+            uniquePlayers.push(data[i].playerName);
+            playerList += '<option>' + data[i].playerName + '</option>';
+        }
+    }
+    document.getElementById("players").innerHTML = playerList;
+    loadPlayer();
+}
 
-    // save armor + shield info
-    localStorage.setItem("equippedArmor", getValue("equippedArmor"));
-    localStorage.setItem("shieldEquip", getValue("shieldEquip"));
+function loadPlayer() {
+    var selectedPlayer = getValue("playerSelect");
+    var playerCharacters;
+    for (var i = 0; i < characterData.length; i++) {
+        if (characterData[i].playerName == selectedPlayer){
+            playerCharacters += '<option>' + characterData[i].characterName + '</option>';
+        }
+    }
+    document.getElementById("characters").innerHTML = playerCharacters;
+    loadCharacter();
+}
 
-    // save HP/hit dice
-    localStorage.setItem("currentHP", getValue("currentHP"));
-    localStorage.setItem("maxHP", getValue("maxHP"));
-    localStorage.setItem("hitDice", getValue("hitDice"));
-    localStorage.setItem("hitDie", getValue("hitDie"));
+function loadCharacter() {
+    setLevel();
+    updateAbilityScores();
+    updateSkillProficiency();
+    updateHP();
+    updateHitDice();
+    loadGear();
+    updateAC();
+}
 
-    // save skills and saving throws
-    localStorage.setItem("acroProf", document.getElementById("acroProf").checked);
-    localStorage.setItem("animProf", document.getElementById("animProf").checked);
-    localStorage.setItem("arcaProf", document.getElementById("arcaProf").checked);
-    localStorage.setItem("athlProf", document.getElementById("athlProf").checked);
-    localStorage.setItem("decProf", document.getElementById("decProf").checked);
-    localStorage.setItem("hisProf", document.getElementById("hisProf").checked);
-    localStorage.setItem("insProf", document.getElementById("insProf").checked);
-    localStorage.setItem("intiProf", document.getElementById("intiProf").checked);
-    localStorage.setItem("invProf", document.getElementById("invProf").checked);
-    localStorage.setItem("medProf", document.getElementById("medProf").checked);
-    localStorage.setItem("natProf", document.getElementById("natProf").checked);
-    localStorage.setItem("percProf", document.getElementById("percProf").checked);
-    localStorage.setItem("perfProf", document.getElementById("perfProf").checked);
-    localStorage.setItem("persProf", document.getElementById("persProf").checked);
-    localStorage.setItem("relProf", document.getElementById("relProf").checked);
-    localStorage.setItem("sleiProf", document.getElementById("sleiProf").checked);
-    localStorage.setItem("steProf", document.getElementById("steProf").checked);
-    localStorage.setItem("survProf", document.getElementById("survProf").checked);
+function setLevel(){
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if (characterData[i].characterName == selectedCharacter) {
+            setValue("playerLevel", characterData[i].level);
+            updateProfBonus();
+            return;
+        }
+    }
+}
 
-    localStorage.setItem("strProf", document.getElementById("strProf").checked);
-    localStorage.setItem("dexProf", document.getElementById("dexProf").checked);
-    localStorage.setItem("conProf", document.getElementById("conProf").checked);
-    localStorage.setItem("intProf", document.getElementById("intProf").checked);
-    localStorage.setItem("wisProf", document.getElementById("wisProf").checked);
-    localStorage.setItem("chaProf", document.getElementById("chaProf").checked);
+function updateProfBonus() {
+  // update proficiency bonus based on player level
+  
+  var level = getValue("playerLevel");
+  setValue("profBonus", Math.floor(2 + ((level-1)/4)));
     
+}
+
+function updateAbilityScores() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++){
+        if (characterData[i].characterName == selectedCharacter){
+            setValue("strScore", characterData[i].STR);
+            setValue("dexScore", characterData[i].DEX);
+            setValue("conScore", characterData[i].CON);
+            setValue("intScore", characterData[i].INT);
+            setValue("wisScore", characterData[i].WIS);
+            setValue("chaScore", characterData[i].CHA);
+            updateModifiers();
+            return;
+        }
+    }
+}
+
+function  updateSkillProficiency() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if (characterData[i].characterName == selectedCharacter) {
+            document.getElementById("acroProf").checked = IsTrue(characterData[i].acrobatics); 
+            document.getElementById("animProf").checked = IsTrue(characterData[i].animalHandling);
+            document.getElementById("arcaProf").checked = IsTrue(characterData[i].arcana);
+            document.getElementById("athlProf").checked = IsTrue(characterData[i].athletics);
+            document.getElementById("decProf").checked = IsTrue(characterData[i].deception);
+            document.getElementById("hisProf").checked = IsTrue(characterData[i].history);
+            document.getElementById("insProf").checked = IsTrue(characterData[i].insight);
+            document.getElementById("intiProf").checked = IsTrue(characterData[i].intimidation);
+            document.getElementById("invProf").checked = IsTrue(characterData[i].investigation);
+            document.getElementById("medProf").checked = IsTrue(characterData[i].medicine);
+            document.getElementById("natProf").checked = IsTrue(characterData[i].nature);
+            document.getElementById("percProf").checked = IsTrue(characterData[i].perception);
+            document.getElementById("perfProf").checked = IsTrue(characterData[i].performance);
+            document.getElementById("persProf").checked = IsTrue(characterData[i].persuasion);
+            document.getElementById("relProf").checked = IsTrue(characterData[i].religion);
+            document.getElementById("sleiProf").checked = IsTrue(characterData[i].sleightOfHand);
+            document.getElementById("steProf").checked = IsTrue(characterData[i].stealth);
+            document.getElementById("survProf").checked = IsTrue(characterData[i].survival);
+            setSkills();
+            return;
+        }
+    }
+}
+
+function updateHP() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if(characterData[i].characterName == selectedCharacter) {
+            setValue("maxHP", characterData[i].maxpHP);
+            setValue("currentHP", characterData[i].HP);
+        }
+    }
+}
+
+function updateHitDice() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if(characterData[i].characterName == selectedCharacter) {
+            setValue("hitDice", characterData[i].hitDice);
+            setValue("hitDie", characterData[i].hitDie);
+        }
+    }    
+}
+
+function loadGear() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if(characterData[i].characterName == selectedCharacter) {
+            setValue("equippedArmor", characterData[i].armor);
+            setValue("equippedshield", characterData[i].shield);
+        }
+    }       
+}
+
+function saveData() {
+    var formData = new FormData(document.getElementById("charSheet"));
+    fetch('https://script.google.com/macros/s/AKfycby7or7dKqkC0iCdCbAnBxtmeI8ACcRi-FjwrJcvtBxGXKcX-q8fFot1vJ0piXr5Eg/exec', 
+            {
+        method: 'post',
+        body: formData,
+    })
 }
 
 function updateModifiers() {
@@ -131,16 +177,7 @@ function updateModifiers() {
     setSkills();
     setSaves();
     enableArmor();
-    equipArmor(equippedArmor);
-    equipShield(shieldEquip);
-}
-
-function updateProfBonus() {
-  // update proficiency bonus based on player level
-  
-  var playerLevel = parseInt(getValue("playerLevel"));
-  setValue("profBonus", Math.ceil((playerLevel/4) + 1));
-    
+    updateAC();
 }
 
 function setSaves(){
@@ -284,7 +321,7 @@ function setSkills(){
     }
 }
 
-function equipArmor(equippedArmor){
+function updateAC(){
     var armor = equippedArmor.value;
     var dexMod = parseInt(getValue("dexMod"));
     if (armor == 'padded' || armor == 'leather'){
@@ -337,14 +374,11 @@ function equipArmor(equippedArmor){
     } else {
         setValue("armorClass", dexMod+10);
     }
-}
-
-function equipShield(shieldEquip){
     var shield = shieldEquip.value;
     if (shield == 'shield'){
         setValue("armorClass", parseInt(getValue("armorClass")) + 2);
     } else {
-        equipArmor(equippedArmor);
+        setValue("armorClass", parseInt(getValue("armorClass")));
     }
 }
 
@@ -427,3 +461,9 @@ function resetHitDice() {
         setValue("hitDice", currentDice + Math.floor((maxDice-currentDice)/2));
     }
 }
+
+function IsTrue(string) {
+    if (string.toLowerCase() == 'true') { return true; }
+}
+
+window.onload = loadSheet();
