@@ -9,49 +9,54 @@ function setValue(element, newValue){
 }
 
 function loadSheet() {
-    var file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKNE_Z7AZ7zHus002EWtn2nQwgQmAsKEgjvru2cdrUzlZ4wj5vfIfK4-qZvJriyf8ecBMHw_JMLIro/pub?gid=0&single=true&output=csv";
-
-    Papa.parse(file,{
-        download: true,
-        header: false,
-        complete: function (results) {
-          characterData = results.data;
-          populateData(characterData);
-        }
-      });
-}
-
-function populateData(data) {
+    var file =
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKNE_Z7AZ7zHus002EWtn2nQwgQmAsKEgjvru2cdrUzlZ4wj5vfIfK4-qZvJriyf8ecBMHw_JMLIro/pub?gid=0&single=true&output=csv";
+  
+    Papa.parse(file, {
+      download: true,
+      header: true,
+      complete: function (results) {
+        characterData = results.data;
+        populateData(characterData);
+      }
+    });
+  }
+  
+  function populateData(data) {
     var playerList;
     var uniquePlayers = [];
-    for (var i = 0; i < data.length; i++){
-        if(!uniquePlayers.includes(data[i].playerName)) {
-            uniquePlayers.push(data[i].playerName);
-            playerList += '<option>' + data[i].playerName + '</option>';
-        }
-    }
+    for (var i = 0; i < data.length; i++) {
+      if (!uniquePlayers.includes(data[i].PlayerName))
+      {
+        uniquePlayers.push(data[i].PlayerName);
+        playerList += '<option>' + data[i].PlayerName + '</option>';
+      } 
+    } 
     document.getElementById("players").innerHTML = playerList;
     loadPlayer();
-}
-
-function loadPlayer() {
-    var selectedPlayer = getValue("playerSelect");
+  }
+  
+  function loadPlayer() {
+    var selectedPlayer = document.getElementById("playerSelect").value;
     var playerCharacters;
     for (var i = 0; i < characterData.length; i++) {
-        if (characterData[i].playerName == selectedPlayer){
-            playerCharacters += '<option>' + characterData[i].characterName + '</option>';
-        }
+      if (characterData[i].PlayerName == selectedPlayer)
+      {
+        playerCharacters += '<option>' + characterData[i].CharacterName + '</option>';
+      } 
     }
     document.getElementById("characters").innerHTML = playerCharacters;
     loadCharacter();
-}
+  }
+  
 
 function loadCharacter() {
+    updateHP();
     setLevel();
+    updateHitDice();
     updateAbilityScores();
     updateSkillProficiency();
-    updateHP();
-    updateHitDice();
+    setSkills();
     loadGear();
     updateAC();
 }
@@ -59,8 +64,8 @@ function loadCharacter() {
 function setLevel(){
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
-        if (characterData[i].characterName == selectedCharacter) {
-            setValue("playerLevel", characterData[i].level);
+        if (characterData[i].CharacterName == selectedCharacter) {
+            setValue("playerLevel", characterData[i].Level);
             updateProfBonus();
             return;
         }
@@ -78,7 +83,7 @@ function updateProfBonus() {
 function updateAbilityScores() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++){
-        if (characterData[i].characterName == selectedCharacter){
+        if (characterData[i].CharacterName == selectedCharacter){
             setValue("strScore", characterData[i].STR);
             setValue("dexScore", characterData[i].DEX);
             setValue("conScore", characterData[i].CON);
@@ -94,7 +99,7 @@ function updateAbilityScores() {
 function  updateSkillProficiency() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
-        if (characterData[i].characterName == selectedCharacter) {
+        if (characterData[i].CharacterName == selectedCharacter) {
             document.getElementById("acroProf").checked = IsTrue(characterData[i].acrobatics); 
             document.getElementById("animProf").checked = IsTrue(characterData[i].animalHandling);
             document.getElementById("arcaProf").checked = IsTrue(characterData[i].arcana);
@@ -122,8 +127,8 @@ function  updateSkillProficiency() {
 function updateHP() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
-        if(characterData[i].characterName == selectedCharacter) {
-            setValue("maxHP", characterData[i].maxpHP);
+        if(characterData[i].CharacterName == selectedCharacter) {
+            setValue("maxHP", characterData[i].MaxHP);
             setValue("currentHP", characterData[i].HP);
         }
     }
@@ -132,9 +137,9 @@ function updateHP() {
 function updateHitDice() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
-        if(characterData[i].characterName == selectedCharacter) {
-            setValue("hitDice", characterData[i].hitDice);
-            setValue("hitDie", characterData[i].hitDie);
+        if(characterData[i].CharacterName == selectedCharacter) {
+            setValue("hitDice", characterData[i].HitDice);
+            setValue("hitDie", characterData[i].HitDie);
         }
     }    
 }
@@ -142,7 +147,7 @@ function updateHitDice() {
 function loadGear() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
-        if(characterData[i].characterName == selectedCharacter) {
+        if(characterData[i].CharacterName == selectedCharacter) {
             setValue("equippedArmor", characterData[i].armor);
             setValue("equippedshield", characterData[i].shield);
         }
