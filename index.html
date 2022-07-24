@@ -52,7 +52,6 @@
                     <optgroup id="tielfling" value="Tiefling" label="Tiefling">
                         <option value="tiefling">Tiefling</option>
                     </optgroup>
-                    <br><br>
                 </select>
                 <br><br>
                 <table class="table">
@@ -65,29 +64,86 @@
                             <option value="none">None</option>
                             <option value="barbarian">Barbarian</option>
                             <option value="bard">Bard</option>
-                            <option valeu="cleric">Cleric</option>
+                            <option value="cleric">Cleric</option>
+                            <option value="druid">Druid</option>
+                            <option value="fighter">Fighter</option>
+                            <option value="monk">Monk</option>
+                            <option value="paladin">Paladin</option>
+                            <option value="ranger">Ranger</option>
+                            <option value="rogue">Rogue</option>
+                            <option value="sorcerer">Sorcerer</option>
+                            <option value="warlock">Warlock</option>
+                            <option value="wizard">Wizard</option>
                         </select></td>
                         <td><select name="Subclass" id="subclass" onchange="applySubclass();">
                             <option value="none"></option>
                             <optgroup id="barbarian" value="Barbarian" label="Barbarian">
-                                <option value="totem">Totem Barbarian</option>
-                                <option value="frenzy">Frenzy Barbarian</option>
+                                <option id="totem" value="totem" disabled>Path of the Totem</option>
+                                <option id="frenzy" value="frenzy" disabled>Path of Frenzy</option>
                             </optgroup>
                             <optgroup id="bard" value="Bard" label="Bard">
-                                <option value="lore">Lore Bard</option>
-                                <option value="valor">Valor Bard</option>
+                                <option value="lore" disabled>College of Lore</option>
+                                <option value="valor" disabled>College of Valor</option>
                             </optgroup>
                             <optgroup id="cleric" value="Cleric" label="Cleric">
-                                <option value="knowledge">Knowledge Domain</option>
-                                <option value="life">Life Domain</option>
-                                <option value="light">Light Domain</option>
-                                <option value="nature">Nature Domain</option>
-                                <option value="life">Life Domain</option>
+                                <option value="knowledge" disabled>Knowledge Domain</option>
+                                <option value="life" disabled>Life Domain</option>
+                                <option value="light" disabled>Light Domain</option>
+                                <option value="nature" disabled>Nature Domain</option>
+                                <option value="tempest" disabled>Temptest Domain</option>
+                                <option value="trickery" disabled>Trickery Domain</option>
+                                <option value="war" disabled>War Domain</option>
+                            </optgroup>
+                            <optgroup id="druid" value="Druid" label="Druid">
+                                <option value="land" disabled>Circle of Land</option>
+                                <option value="moon" disabled>Circle of Moon</option>
+                            </optgroup>
+                            <optgroup id="fighter" value="Fighter" label="Fighter">
+                                <option value="champion" disabled>Champion</option>
+                                <option value="battleMaster" disabled>Battle Master</option>
+                                <option value="eldritchKnight" disabled>Eldritch Knight</option>
+                            </optgroup>
+                            <optgroup id="monk" value="Monk" label="Monk">
+                                <option value="openHand" disabled>Way of the Open Hand</option>
+                                <option value="shadow" disabled>Way of Shadow</option>
+                                <option value="elements" disabled>Way of the Elements</option>
+                            </optgroup>
+                            <optgroup id="paladin" value="Paladin" label="Paladin">
+                                <option value="devotion" disabled>Oath of Devotion</option>
+                                <option value="ancients" disabled>Oath of Ancients</option>
+                                <option value="vengance" disabled>Oath of Vengance</option>
+                            </optgroup>
+                            <optgroup id="ranger" value="Ranger" label="Ranger">
+                                <option value="hunter" disabled>Hunter</option>
+                                <option value="beast" disabled>Beast Master</option>
+                            </optgroup>
+                            <optgroup id="rogue" value="Rogue" label="Rogue">
+                                <option value="thief" disabled>Thief</option>
+                                <option value="assassin" disabled>Assassin</option>
+                                <option value="arcane" disabled>Arcane Trickster</option>
+                            </optgroup>
+                            <optgroup id="sorcerer" value="Sorcerer" label="Sorcerer">
+                                <option value="dragonic" disabled>Draconic Bloodline</option>
+                                <option value="wild" disabled>Wild Magic</option>
+                            </optgroup>
+                            <optgroup id="warlock" value="Warlock" label="Warlock">
+                                <option value="fey" disabled>The Archfey</option>
+                                <option value="fiend" disabled>The Fiend</option>
+                                <option value="oldOne" disabled>The Old Ones</option>
+                            </optgroup>
+                            <optgroup id="wizard" value="Wizard" label="Wizard">
+                                <option value="abjuration" disabled>School of Abjuration</option>
+                                <option value="conjuration" disabled>School of Conjuration</option>
+                                <option value="divination" disabled>School of Divination</option>
+                                <option value="enchantment" disabled>School of Enchantment</option>
+                                <option value="evocation" disabled>School of Evocation</option>
+                                <option value="illusion" disabled>School of Illusion</option>
+                                <option value="necromancer" disabled>School of Necromancy</option>
+                                <option value="transmutation" disabled>School of Transmutation</option>
                             </optgroup>
                         </select></td>
                     </tr>
                 </table>
-                <br><br>
                 <h2>Level</h2>
                     <input name="Level" type="number" id="playerLevel" min="1" max="20" value="1" onchange="playerLevelChange();">
                 <br><br>
