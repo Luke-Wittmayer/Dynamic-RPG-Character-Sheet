@@ -52,13 +52,16 @@ function loadSheet() {
 
 function loadCharacter() {
     updateHP();
-    setLevel();
     updateHitDice();
-    updateAbilityScores();
     updateSkillProficiency();
-    setSkills();
+    updateAbilityScores();
     loadGear();
     updateAC();
+    setLevel();
+    setSkills();
+    setSaves();
+    loadRace();
+    applyRace();
 }
 
 function setLevel(){
@@ -100,6 +103,13 @@ function  updateSkillProficiency() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
         if (characterData[i].CharacterName == selectedCharacter) {
+            document.getElementById("strProf").checked = IsTrue(characterData[i].strSave);
+            document.getElementById("dexProf").checked = IsTrue(characterData[i].dexSave);
+            document.getElementById("conProf").checked = IsTrue(characterData[i].conSave);
+            document.getElementById("intProf").checked = IsTrue(characterData[i].intSave);
+            document.getElementById("wisProf").checked = IsTrue(characterData[i].wisSave);
+            document.getElementById("chaProf").checked = IsTrue(characterData[i].chaSave);
+            setSaves();
             document.getElementById("acroProf").checked = IsTrue(characterData[i].acrobatics); 
             document.getElementById("animProf").checked = IsTrue(characterData[i].animalHandling);
             document.getElementById("arcaProf").checked = IsTrue(characterData[i].arcana);
@@ -119,6 +129,7 @@ function  updateSkillProficiency() {
             document.getElementById("steProf").checked = IsTrue(characterData[i].stealth);
             document.getElementById("survProf").checked = IsTrue(characterData[i].survival);
             setSkills();
+
             return;
         }
     }
@@ -149,18 +160,38 @@ function loadGear() {
     for (var i = 0; i < characterData.length; i++) {
         if(characterData[i].CharacterName == selectedCharacter) {
             setValue("equippedArmor", characterData[i].armor);
-            setValue("equippedshield", characterData[i].shield);
+            setValue("equippedShield", characterData[i].shield);
         }
     }       
 }
 
-function saveData() {
-    var formData = new FormData(document.getElementById("charSheet"));
-    fetch('https://script.google.com/macros/s/AKfycby7or7dKqkC0iCdCbAnBxtmeI8ACcRi-FjwrJcvtBxGXKcX-q8fFot1vJ0piXr5Eg/exec', 
-            {
-        method: 'post',
-        body: formData,
-    })
+function loadRace() {
+    var selectedCharacter = getValue("characterSelect");
+    for (var i = 0; i < characterData.length; i++) {
+        if(characterData[i].CharacterName == selectedCharacter) {
+            setValue("race", characterData[i].Race);
+        }
+    }
+}
+
+function applyRace() {
+    var strScore = parseInt(getValue("strScore"));
+    var dexScore = parseInt(getValue("dexScore"));
+    var conScore = parseInt(getValue("conScore"));
+    var intScore = parseInt(getValue("intScore"));
+    var wisScore = parseInt(getValue("wisScore"));
+    var chaScore = parseInt(getValue("chaScore"));
+    var race = race.value;
+
+    if (race == 'hillDwarf'){
+        setValue("conScore", conScore+2);
+        setValue("wisScore", wisScore+1);
+    } else if (race == 'mountainDwarf'){
+        setValue("conScore", conScore+2);
+        setValue("strScore", strScore+2);
+    }
+
+    updateModifiers();
 }
 
 function updateModifiers() {
@@ -195,33 +226,45 @@ function setSaves(){
     var chaMod = parseInt(getValue("chaMod")); 
 
     if (document.getElementById("strProf").checked == true) {
+        setValue("strProf", true);
         setValue("strSave", strMod+profBonus);
     } else {
+        setValue("strProf", false);
         setValue("strSave", strMod);
     }
     if (document.getElementById("dexProf").checked == true) {
+        setValue("dexProf", true);
         setValue("dexSave", dexMod+profBonus);
     } else {
+        setValue("dexProf", false);
         setValue("dexSave", dexMod);
     }
     if (document.getElementById("conProf").checked == true) {
+        setValue("conProf", true);
         setValue("conSave", conMod+profBonus);
     } else {
+        setValue("conProf", false);
         setValue("conSave", conMod);
     }
     if (document.getElementById("intProf").checked == true) {
+        setValue("intProf", true);
         setValue("intSave", intMod+profBonus);
     } else {
+        setValue("intProf", false);
         setValue("intSave", intMod);
     }
     if (document.getElementById("wisProf").checked == true) {
+        setValue("wisProf", true);
         setValue("wisSave", wisMod+profBonus);
     } else {
+        setValue("wisProf", false);
         setValue("wisSave", wisMod);
     }
     if (document.getElementById("chaProf").checked == true) {
+        setValue("chaProf", true);
         setValue("chaSave", chaMod+profBonus);
     } else {
+        setValue("chaProf", false);
         setValue("chaSave", chaMod);
     }
 }
@@ -235,93 +278,129 @@ function setSkills(){
     var chaMod = parseInt(getValue("chaMod"));
 
     if (document.getElementById("acroProf").checked == true) {
+        setValue("acroProf", true);
         setValue("acroScore", dexMod+profBonus);
     } else {
+        setValue("acroProf", false);
         setValue("acroScore", dexMod);
     }
     if (document.getElementById("animProf").checked == true) {
+        setValue("animProf", true);
         setValue("animScore", wisMod+profBonus);
     } else {
+        setValue("animProf", false);
         setValue("animScore", wisMod);
     }
     if (document.getElementById("arcaProf").checked == true) {
+        setValue("arcaProf", true);
         setValue("arcaScore", intMod+profBonus);
     } else {
+        setValue("arcaProf", false);
         setValue("arcaScore", intMod);
     }
     if (document.getElementById("athlProf").checked == true) {
+        setValue("athlProf", true);
         setValue("athlScore", strMod+profBonus);
     } else {
+        setValue("athlProf", false);
         setValue("athlScore", strMod);
     }
     if (document.getElementById("decProf").checked == true) {
+        setValue("decProf", true);
         setValue("decScore", chaMod+profBonus);
     } else {
+        setValue("decProf", false);
         setValue("decScore", chaMod);
     }
     if (document.getElementById("hisProf").checked == true) {
+        setValue("hisProf", true);
         setValue("hisScore", intMod+profBonus);
     } else {
+        setValue("hisProf", false);
         setValue("hisScore", intMod);
     }
     if (document.getElementById("insProf").checked == true) {
+        setValue("insProf", true);
         setValue("insScore", wisMod+profBonus);
     } else {
+        setValue("insProf", false);
         setValue("insScore", wisMod);
     }
     if (document.getElementById("intiProf").checked == true) {
+        setValue("intiProf", true);
         setValue("intiScore", chaMod+profBonus);
     } else {
+        setValue("intiProf", false);
         setValue("intiScore", chaMod);
     }
     if (document.getElementById("invProf").checked == true) {
+        setValue("invProf", true);
         setValue("invScore", intMod+profBonus);
     } else {
+        setValue("invProf", false);
         setValue("invScore", intMod);
     }
     if (document.getElementById("medProf").checked == true) {
+        setValue("medProf", true);
         setValue("medScore", wisMod+profBonus);
     } else {
+        setValue("medProf", false);
         setValue("medScore", wisMod);
     }
     if (document.getElementById("natProf").checked == true) {
+        setValue("natProf", true);
         setValue("natScore", intMod+profBonus);
     } else {
+        setValue("natProf", false);
         setValue("natScore", intMod);
     }
     if (document.getElementById("percProf").checked == true) {
+        setValue("percProf", true);
         setValue("percScore", wisMod+profBonus);
     } else {
+        setValue("percProf", false);
         setValue("percScore", wisMod);
     }
     if (document.getElementById("perfProf").checked == true) {
+        setValue("perfProf", true);
         setValue("perfScore", chaMod+profBonus);
     } else {
+        setValue("perfProf", false);
         setValue("perfScore", chaMod);
     }
     if (document.getElementById("persProf").checked == true) {
+        setValue("persProf", true);
         setValue("persScore", chaMod+profBonus);
     } else {
+        setValue("persProf", false);
         setValue("persScore", chaMod);
     }
     if (document.getElementById("relProf").checked == true) {
+        setValue("relProf", true);
         setValue("relScore", intMod+profBonus);
     } else {
+        setValue("relProf", false);
         setValue("relScore", intMod);
     }
     if (document.getElementById("sleiProf").checked == true) {
+        setValue("sleiProf", true);
         setValue("sleiScore", dexMod+profBonus);
     } else {
+        setValue("sleiProf", false);
         setValue("sleiScore", dexMod);
     }
     if (document.getElementById("steProf").checked == true) {
+        setValue("steProf", true);
         setValue("steScore", dexMod+profBonus);
     } else {
+        setValue("steProf", false);
         setValue("steScore", dexMod);
     }
     if (document.getElementById("survProf").checked == true) {
+        setValue("survProf", true);
         setValue("survScore", wisMod+profBonus);
     } else {
+        setValue("survProf", false);
         setValue("survScore", wisMod);
     }
 }
@@ -379,7 +458,7 @@ function updateAC(){
     } else {
         setValue("armorClass", dexMod+10);
     }
-    var shield = shieldEquip.value;
+    var shield = equippedShield.value;
     if (shield == 'shield'){
         setValue("armorClass", parseInt(getValue("armorClass")) + 2);
     } else {
@@ -408,6 +487,7 @@ function playerLevelChange() {
     updateProfBonus();
     updateModifiers();
     setSkills();
+    setSaves();
     resetHP();
     resetHitDice();
 }
@@ -465,6 +545,15 @@ function resetHitDice() {
     if(currentDice < maxDice){
         setValue("hitDice", currentDice + Math.floor((maxDice-currentDice)/2));
     }
+}
+
+function saveData() {
+    var formData = new FormData(document.getElementById("charSheet"));
+    fetch('https://script.google.com/macros/s/AKfycby7or7dKqkC0iCdCbAnBxtmeI8ACcRi-FjwrJcvtBxGXKcX-q8fFot1vJ0piXr5Eg/exec', 
+            {
+        method: 'post',
+        body: formData,
+    })
 }
 
 function IsTrue(string) {

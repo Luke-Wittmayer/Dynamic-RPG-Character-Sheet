@@ -17,6 +17,77 @@
                     <input name="CharacterName" id="characterSelect" onchange="loadCharacter()" list="characters"/>
                     <datalist id="characters"></datalist>
                 <br><br>    
+                <h2>Race</h2>
+                <select name="Race" id="race" onchange="applyRace();">
+                    <option value="none">None</option>
+                    <optgroup id="dwarf" value="Dwarf" label="Dwarf">
+                        <option value="hillDwarf">Hill Dwarf</option>
+                        <option value="mountainDwarf">Mountain Dwarf</option>
+                    </optgroup>
+                    <optgroup id="elf" value="Elf" label="Elf">
+                        <option value="highElf">High Elf</option>
+                        <option value="woodElf">Wood Elf</option>
+                        <option value="darkElf">Dark Elf (Drow)</option>
+                    </optgroup>
+                    <optgroup id="halfling" value="Halfling" label="Halfling">
+                        <option value="lightfootHalfling">Lightfoot Halfling</option>
+                        <option value="stoutHalfling">Stout Halfling</option>
+                    </optgroup>
+                    <optgroup id="human" value="Human" label="Human">
+                        <option value="human">Human</option>
+                    </optgroup>
+                    <optgroup id="dragonborn" value="Dragonborn" label="Dragonborn">
+                        <option value="dragonborn">Dragonborn</option>
+                    </optgroup>
+                    <optgroup id="gnome" value="Gnome" label="Gnome">
+                        <option value="forestGnome">Forest Gnome</option>
+                        <option value="rockGnome">Rock Gnome</option>
+                    </optgroup>
+                    <optgroup id="halfElf" value="Half Elf" label="Half Elf">
+                        <option value="halfElf">Half Elf</option>
+                    </optgroup>
+                    <optgroup id="halfOrc" value="Half Orc" label="Half Orc">
+                        <option value="halfOrc">Half Orc</option>
+                    </optgroup>
+                    <optgroup id="tielfling" value="Tiefling" label="Tiefling">
+                        <option value="tiefling">Tiefling</option>
+                    </optgroup>
+                    <br><br>
+                </select>
+                <br><br>
+                <table class="table">
+                    <tr>
+                        <th>Class</th>
+                        <th>Subclass</th>
+                    </tr>
+                    <tr>
+                        <td><select name="Class" id="class" onchange="applyClass();">
+                            <option value="none">None</option>
+                            <option value="barbarian">Barbarian</option>
+                            <option value="bard">Bard</option>
+                            <option valeu="cleric">Cleric</option>
+                        </select></td>
+                        <td><select name="Subclass" id="subclass" onchange="applySubclass();">
+                            <option value="none"></option>
+                            <optgroup id="barbarian" value="Barbarian" label="Barbarian">
+                                <option value="totem">Totem Barbarian</option>
+                                <option value="frenzy">Frenzy Barbarian</option>
+                            </optgroup>
+                            <optgroup id="bard" value="Bard" label="Bard">
+                                <option value="lore">Lore Bard</option>
+                                <option value="valor">Valor Bard</option>
+                            </optgroup>
+                            <optgroup id="cleric" value="Cleric" label="Cleric">
+                                <option value="knowledge">Knowledge Domain</option>
+                                <option value="life">Life Domain</option>
+                                <option value="light">Light Domain</option>
+                                <option value="nature">Nature Domain</option>
+                                <option value="life">Life Domain</option>
+                            </optgroup>
+                        </select></td>
+                    </tr>
+                </table>
+                <br><br>
                 <h2>Level</h2>
                     <input name="Level" type="number" id="playerLevel" min="1" max="20" value="1" onchange="playerLevelChange();">
                 <br><br>
@@ -94,7 +165,7 @@
                 </select>
                 <br><br>
                 <h6>Equipped Shield:</h6>
-                <select name="shield" id ="shieldEquip" onchange="updateAC();">
+                <select name="shield" id ="equippedShield" onchange="updateAC();">
                     <option value="none">None</option>
                     <option value="shield">Shield</option>
                 </select>
@@ -137,32 +208,32 @@
                 <h2>Saving Throws</h2>
                 <table class="table">
                     <tr>
-                        <td><input name="strProf" type="checkbox" id="strProf" onchange="setSaves();"></td>
+                        <td><input name="strSave" type="checkbox" id="strProf" onchange="setSaves();"></td>
                         <td>Strength</td>
                         <td><input type="number" id="strSave"></td>
                     </tr>
                     <tr>
-                        <td><input name="dexProf" type="checkbox" id="dexProf" onchange="setSaves();"></td>
+                        <td><input name="dexSave" type="checkbox" id="dexProf" onchange="setSaves();"></td>
                         <td>Dexerity</td>
                         <td><input type="number" id="dexSave"></td>
                     </tr>
                     <tr>
-                        <td><input name="conProf" type="checkbox" id="conProf" onchange="setSaves();"></td>
+                        <td><input name="conSave" type="checkbox" id="conProf" onchange="setSaves();"></td>
                         <td>Constitution</td>
                         <td><input type="number" id="conSave"></td>
                     </tr>
                     <tr>
-                        <td><input name="intProf" type="checkbox" id="intProf" onchange="setSaves();"></td>
+                        <td><input name="intSave" type="checkbox" id="intProf" onchange="setSaves();"></td>
                         <td>Intelligence</td>
                         <td><input type="number" id="intSave"></td>
                     </tr>
                     <tr>
-                        <td><input name="wisProf" type="checkbox" id="wisProf" onchange="setSaves();"></td>
+                        <td><input name="wisSave" type="checkbox" id="wisProf" onchange="setSaves();"></td>
                         <td>Wisdom</td>
                         <td><input type="number" id="wisSave"></td>
                     </tr>
                     <tr>
-                        <td><input name="chaProf" type="checkbox" id="chaProf" onchange="setSaves();"></td>
+                        <td><input name="chaSave" type="checkbox" id="chaProf" onchange="setSaves();"></td>
                         <td>Charisma</td>
                         <td><input type="number" id="chaSave"></td>
                     </tr>
@@ -245,7 +316,7 @@
                         <td><input type="number" id="relScore"></td>
                     </tr>
                     <tr>
-                        <td><input name="seightOfHand" type="checkbox" id="sleiProf" onchange="setSkills();"></td>
+                        <td><input name="sleightOfHand" type="checkbox" id="sleiProf" onchange="setSkills();"></td>
                         <td>Sleight of Hand:</td>
                         <td><input type="number" id="sleiScore"></td>
                     </tr>
