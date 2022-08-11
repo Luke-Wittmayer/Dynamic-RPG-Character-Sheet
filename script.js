@@ -8,6 +8,10 @@ function setValue(element, newValue){
     document.getElementById(element).value = newValue;
 }
 
+function changeEnabled(element, state){
+    document.getElementById(element).disabled = state;
+}
+
 function loadSheet() {
     var file =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKNE_Z7AZ7zHus002EWtn2nQwgQmAsKEgjvru2cdrUzlZ4wj5vfIfK4-qZvJriyf8ecBMHw_JMLIro/pub?gid=0&single=true&output=csv";
@@ -52,6 +56,7 @@ function loadSheet() {
 
 function loadCharacter() {
     updateHP();
+    updateCurrentHP();
     updateHitDice();
     updateSkillProficiency();
     updateAbilityScores();
@@ -135,11 +140,10 @@ function  updateSkillProficiency() {
     }
 }
 
-function updateHP() {
+function updateCurrentHP() {
     var selectedCharacter = getValue("characterSelect");
     for (var i = 0; i < characterData.length; i++) {
         if(characterData[i].CharacterName == selectedCharacter) {
-            setValue("maxHP", characterData[i].MaxHP);
             setValue("currentHP", characterData[i].HP);
         }
     }
@@ -214,6 +218,7 @@ function updateModifiers() {
     setSaves();
     enableArmor();
     updateAC();
+    updateHP();
 }
 
 function setSaves(){
@@ -469,21 +474,212 @@ function updateAC(){
 function enableArmor(){
     var strScore = getValue("strScore");
     if (strScore >= 15) {
-        document.getElementById("plateArmor").disabled = false;
-        document.getElementById("chainmailArmor").disabled = false;
-        document.getElementById("splintArmor").disabled = false;
+        changeEnabled("plateArmor", false);
+        changeEnabled("chainmailArmor", false);
+        changeEnabled("splintArmor", false);
     } else if (strScore >= 13) {
-        document.getElementById("plateArmor").disabled = true;
-        document.getElementById("chainmailArmor").disabled = false;
-        document.getElementById("splintArmor").disabled = true;
+        changeEnabled("plateArmor", true);
+        changeEnabled("chainmailArmor", false);
+        changeEnabled("splintArmor", true);
     } else {
-        document.getElementById("plateArmor").disabled = true;
-        document.getElementById("chainmailArmor").disabled = true;
-        document.getElementById("splintArmor").disabled = true;
+        changeEnabled("plateArmor", true);
+        changeEnabled("chainmailArmor", true);
+        changeEnabled("splintArmor", true)
+    }
+}
+
+function applyClass(){
+    var playerClass = getValue("class");
+    var conMod = parseInt(getValue("conMod"));
+    var level = parseInt(getValue("playerLevel"));
+    updateHP();
+    enableSubclass();
+}
+
+function enableSubclass(){
+    var playerClass = getValue("class");
+    var level = getValue("playerLevel");
+    if (playerClass == "barbarian" && level >= 3){
+        changeEnabled("barbarian", false);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "bard" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", false);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "cleric" && level >= 1){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", false);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "druid" && level >= 2){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", false);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "fighter" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", false);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "monk" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", false);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "paladin" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", false);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "ranger" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", false);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "rogue" && level >= 3){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", false);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "sorcerer" && level >= 1){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", false);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "warlock" && level >= 1){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", false);
+        changeEnabled("wizard", true);
+    } else if (playerClass == "wizard" && level >= 2){
+        changeEnabled("barbarian", true);
+        changeEnabled("bard", true);
+        changeEnabled("cleric", true);
+        changeEnabled("druid", true);
+        changeEnabled("fighter", true);
+        changeEnabled("monk", true);
+        changeEnabled("paladin", true);
+        changeEnabled("ranger", true);
+        changeEnabled("rogue", true);
+        changeEnabled("sorcerer", true);
+        changeEnabled("warlock", true);
+        changeEnabled("wizard", false);
+    }
+}
+
+function updateHP(){
+    var playerClass = getValue("class");
+    var conMod = parseInt(getValue("conMod"));
+    var level = parseInt(getValue("playerLevel"));
+    if(playerClass == "barbarian"){
+        setValue("maxHP", 12+conMod+((level-1)*(7+conMod)));
+        setValue("hitDie", 12);
+    } else if (playerClass == "paladin" || playerClass == "fighter" || playerClass == "ranger"){
+        setValue("maxHP", 10+conMod+((level-1)*(6+conMod)));
+        setValue("hitDie", 10);
+    } else if (playerClass == "wizard") {
+        setValue("maxHP", 6+conMod+((level-1)*(4+conMod)));
+        setValue("hitDie", 6);
+    } else {
+        setValue("maxHP", 8+conMod+((level-1)*(5+conMod)));
+        setValue("hitDie", 8);
     }
 }
 
 function playerLevelChange() {
+    applyClass();
+    enableSubclass();
     updateProfBonus();
     updateModifiers();
     setSkills();
